@@ -1,104 +1,637 @@
-/* CSS Variables for Theme Management */
+/* Notes app theme (modern light) */
 :root {
-  /* Light theme colors */
-  --bg-primary: #ffffff;
-  --bg-secondary: #f8f9fa;
-  --text-primary: #282c34;
-  --text-secondary: #61dafb;
-  --border-color: #e9ecef;
-  --button-bg: #007bff;
-  --button-text: #ffffff;
+  --primary: #3b82f6;
+  --accent: #06b6d4;
+
+  --bg: #f9fafb;
+  --surface: #ffffff;
+  --surface-2: #f3f4f6;
+
+  --text: #111827;
+  --muted: #64748b;
+
+  --border: #e5e7eb;
+  --shadow: 0 10px 30px rgba(17, 24, 39, 0.08);
+  --shadow-sm: 0 2px 10px rgba(17, 24, 39, 0.08);
+
+  --ring: rgba(59, 130, 246, 0.35);
+
+  --radius: 14px;
+  --radius-sm: 10px;
+
+  --font: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial,
+    sans-serif;
 }
 
-[data-theme="dark"] {
-  /* Dark theme colors */
-  --bg-primary: #1a1a1a;
-  --bg-secondary: #282c34;
-  --text-primary: #ffffff;
-  --text-secondary: #61dafb;
-  --border-color: #404040;
-  --button-bg: #0056b3;
-  --button-text: #ffffff;
+* {
+  box-sizing: border-box;
 }
 
-.App {
-  text-align: center;
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
-  min-height: 100vh;
-  transition: background-color 0.3s ease, color 0.3s ease;
+html,
+body,
+#root {
+  height: 100%;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+body {
+  margin: 0;
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+a {
+  color: inherit;
 }
 
-.App-header {
-  background-color: var(--bg-secondary);
-  min-height: 100vh;
+button,
+input,
+textarea {
+  font-family: inherit;
+}
+
+/* App frame */
+.NotesAppRoot {
+  height: 100%;
+}
+
+/* Header */
+.AppHeader {
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+
+  padding: 0 18px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.Brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 220px;
+}
+
+.BrandMark {
+  width: 34px;
+  height: 34px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  box-shadow: var(--shadow-sm);
+}
+
+.BrandTitle {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: var(--text-primary);
-  transition: background-color 0.3s ease;
-  position: relative;
+  line-height: 1.1;
 }
 
-.App-link {
-  color: var(--text-secondary);
-  transition: color 0.3s ease;
-}
-
-.theme-toggle {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background-color: var(--button-bg);
-  color: var(--button-text);
-  border: none;
-  border-radius: 8px;
-  padding: 10px 20px;
+.BrandTitle strong {
   font-size: 14px;
-  font-weight: 600;
+}
+
+.BrandTitle span {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.HeaderActions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.SearchBox {
+  width: min(520px, 46vw);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+}
+
+.SearchBox input {
+  border: none;
+  outline: none;
+  background: transparent;
+  width: 100%;
+  font-size: 14px;
+}
+
+.KbdHint {
+  font-size: 12px;
+  color: var(--muted);
+  border: 1px solid var(--border);
+  border-bottom-width: 2px;
+  padding: 2px 8px;
+  border-radius: 8px;
+  background: var(--surface-2);
+}
+
+/* Layout grid */
+.AppShell {
+  height: calc(100% - 64px);
+  display: grid;
+  grid-template-columns: 280px 360px 1fr;
+  gap: 14px;
+  padding: 14px;
+}
+
+.Panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  min-height: 0; /* allow children to scroll */
+}
+
+.PanelHeader {
+  padding: 14px 14px 10px 14px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.PanelHeader h2 {
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0;
+}
+
+.PanelBody {
+  padding: 10px;
+  overflow: auto;
+  height: 100%;
+}
+
+/* Buttons */
+.Btn {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  padding: 9px 12px;
+  border-radius: 12px;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  font-weight: 600;
+  font-size: 13px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: var(--shadow-sm);
 }
 
-.theme-toggle:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  opacity: 0.9;
+.Btn:hover {
+  border-color: rgba(59, 130, 246, 0.45);
 }
 
-.theme-toggle:active {
-  transform: translateY(0);
+.Btn:focus {
+  outline: 3px solid var(--ring);
+  outline-offset: 2px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
+.BtnPrimary {
+  border: none;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  color: white;
+}
+
+.BtnDanger {
+  border: 1px solid rgba(239, 68, 68, 0.35);
+  background: rgba(239, 68, 68, 0.08);
+  color: #b91c1c;
+}
+
+.BtnGhost {
+  border: 1px solid transparent;
+  background: transparent;
+  box-shadow: none;
+  color: var(--muted);
+}
+
+.BtnGhost:hover {
+  border-color: var(--border);
+  background: var(--surface-2);
+  color: var(--text);
+}
+
+.BtnSmall {
+  padding: 7px 10px;
+  border-radius: 10px;
+  font-weight: 600;
+}
+
+.Badge {
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 12px;
+  color: var(--muted);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+}
+
+/* Tags */
+.TagList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.TagItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+
+  padding: 10px 10px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.TagItem:hover {
+  border-color: rgba(6, 182, 212, 0.45);
+}
+
+.TagItemActive {
+  border-color: rgba(59, 130, 246, 0.55);
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.08);
+}
+
+.TagName {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.TagDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+}
+
+.TagName span {
+  font-weight: 700;
+  font-size: 13px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.TagCount {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+/* Notes list */
+.NoteList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.NoteListItem {
+  padding: 12px 12px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.NoteListItem:hover {
+  border-color: rgba(59, 130, 246, 0.45);
+}
+
+.NoteListItemActive {
+  border-color: rgba(59, 130, 246, 0.65);
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.08);
+}
+
+.NoteTitleRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.NoteTitleRow strong {
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.NoteMeta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.NoteSnippet {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.35;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+/* Note detail */
+.NoteDetail {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.NoteDetailHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 16px 12px 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.NoteDetailHeader h1 {
+  margin: 0;
+  font-size: 18px;
+  letter-spacing: -0.01em;
+}
+
+.NoteDetailContent {
+  padding: 16px;
+  overflow: auto;
+  min-height: 0;
+}
+
+.NoteDetailContent p {
+  margin: 0;
+  color: var(--text);
+  white-space: pre-wrap;
+  line-height: 1.55;
+}
+
+.EmptyState {
+  height: 100%;
+  display: grid;
+  place-items: center;
+  padding: 28px;
+  color: var(--muted);
+  text-align: center;
+}
+
+.EmptyState strong {
+  color: var(--text);
+}
+
+/* Modal */
+.ModalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(17, 24, 39, 0.45);
+  display: grid;
+  place-items: center;
+  z-index: 50;
+  padding: 18px;
+}
+
+.Modal {
+  width: min(720px, 96vw);
+  border-radius: 18px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.ModalHeader {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.ModalHeader h3 {
+  margin: 0;
+  font-size: 14px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.ModalBody {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.Field label {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--muted);
+  margin: 0 0 6px 2px;
+}
+
+.Field input,
+.Field textarea {
+  width: 100%;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  border-radius: 12px;
+  padding: 10px 12px;
+  outline: none;
+  font-size: 14px;
+}
+
+.Field textarea {
+  min-height: 220px;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.Field input:focus,
+.Field textarea:focus {
+  outline: 3px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.ModalFooter {
+  padding: 12px 16px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+/* Toasts */
+.ToastHost {
+  position: fixed;
+  right: 14px;
+  bottom: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 60;
+  max-width: min(420px, calc(100vw - 28px));
+}
+
+.Toast {
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+  padding: 12px 12px;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.ToastIcon {
+  width: 28px;
+  height: 28px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  font-weight: 900;
+  color: white;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+}
+
+.ToastError .ToastIcon {
+  background: linear-gradient(135deg, #ef4444, #f97316);
+}
+
+.ToastContent {
+  flex: 1;
+  min-width: 0;
+}
+
+.ToastContent strong {
+  display: block;
+  font-size: 13px;
+  margin-bottom: 2px;
+}
+
+.ToastContent p {
+  margin: 0;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.ToastDismiss {
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 1;
+}
+
+/* Busy overlay */
+.BusyPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.Spinner {
+  width: 14px;
+  height: 14px;
+  border-radius: 999px;
+  border: 2px solid rgba(100, 116, 139, 0.25);
+  border-top-color: rgba(59, 130, 246, 0.9);
+  animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
   to {
     transform: rotate(360deg);
   }
 }
 
-/* Responsive design for mobile */
-@media (max-width: 768px) {
-  .theme-toggle {
-    top: 10px;
-    right: 10px;
-    padding: 8px 16px;
-    font-size: 12px;
+/* Responsive */
+@media (max-width: 1100px) {
+  .AppShell {
+    grid-template-columns: 260px 1fr;
+    grid-template-rows: 1fr;
+  }
+  .PanelDetail {
+    grid-column: 2 / 3;
+  }
+  .PanelList {
+    grid-column: 2 / 3;
+  }
+}
+
+@media (max-width: 900px) {
+  .AppShell {
+    grid-template-columns: 1fr;
+  }
+
+  .SearchBox {
+    width: 50vw;
+  }
+
+  .PanelTags {
+    display: none;
+  }
+
+  .PanelList {
+    display: none;
+  }
+
+  .PanelDetail {
+    height: calc(100vh - 64px - 28px);
+  }
+}
+
+@media (max-width: 520px) {
+  .Brand {
+    min-width: auto;
+  }
+  .BrandTitle span {
+    display: none;
+  }
+  .SearchBox {
+    width: 46vw;
+  }
+  .KbdHint {
+    display: none;
   }
 }
